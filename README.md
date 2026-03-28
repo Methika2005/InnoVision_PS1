@@ -15,9 +15,6 @@ In the modern market, **"Greenwashing"** creates a massive trust deficit. Brands
 * **🔗 URL Metadata Scraper:** Beyond simple text input, the tool can ingest URLs from major e-commerce platforms, automatically extracting product descriptions for seamless auditing.
 * **⚖️ Competitor Comparison (The Unique Edge):** If a brand scores poorly, the system suggests a verified competitor (e.g., suggesting a B-Corp brand over a fast-fashion brand) to guide ethical purchasing decisions.
 * **📊 Weighted Scoring Dashboard:** A professional UI featuring **Real-time Gauge Charts** that translate complex NLP outputs into an intuitive 0-100 Trust Score.
-    * **Base Score:** 100
-    * **Penalties:** -15 per Vague Buzzword, -40 for Missing Certifications.
-    * **Bonuses:** +20 for specific, measurable evidence.
 * **🕵️ Visual Reasoning Breakdown:** Every audit provides a human-readable "Reasoning Summary" explaining exactly *why* a product failed (e.g., "Uses vague terms," "No certification found").
 * **🚩 Future Promise Penalty:** A custom logic-gate that detects and penalizes vague long-term goals (e.g., "Net Zero by 2050") that lack immediate transparency or roadmaps.
 
