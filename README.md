@@ -13,7 +13,6 @@ In the modern market, **"Greenwashing"** creates a massive trust deficit. Brands
 
 ##  Key Features & Innovations
 * **URL Metadata Scraper:** Beyond simple text input, the tool can ingest URLs from major e-commerce platforms, automatically extracting product descriptions for seamless auditing.
-* **Competitor Comparison (The Unique Edge):** If a brand scores poorly, the system suggests a verified competitor (e.g., suggesting a B-Corp brand over a fast-fashion brand) to guide ethical purchasing decisions.
 * **Weighted Scoring Dashboard:** A professional UI featuring **Real-time Gauge Charts** that translate complex NLP outputs into an intuitive 0-100 Trust Score.
 * **Visual Reasoning Breakdown:** Every audit provides a human-readable "Reasoning Summary" explaining exactly *why* a product failed (e.g., "Uses vague terms," "No certification found").
 * **Future Promise Penalty:** A custom logic-gate that detects and penalizes vague long-term goals (e.g., "Net Zero by 2050") that lack immediate transparency or roadmaps.
@@ -68,6 +67,7 @@ https://drive.google.com/file/d/1Onlr5d5nSulAsQcqy3LX6YhUJlwTDNCW/view?usp=shari
 * **Browser Extension:** A Chrome plugin to provide real-time trust scores while shopping on Amazon or Flipkart.
 * **Agentic RAG:** Using AI Agents to browse the web for a company’s latest Annual Sustainability Report in real-time.
 * **Mobile App with OCR:** Allowing users to scan physical product barcodes in stores to get an instant sustainability audit.
+* **Competitor Comparison (The Unique Edge):** If a brand scores poorly, the system suggests a verified competitor (e.g., suggesting a B-Corp brand over a fast-fashion brand) to guide ethical purchasing decisions.
 * **Blockchain Integration:** Connecting to immutable ledgers for verified supply chain "Proof of Origin."
 
 ---
