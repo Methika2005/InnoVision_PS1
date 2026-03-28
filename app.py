@@ -164,7 +164,7 @@ html, body, p, div, span, label, input, textarea, button {
 [data-testid="stRadio"] label {
     background:#FFFFFF !important; color:#1A1A18 !important;
     border:1.5px solid #E5E3DC !important; border-radius:8px !important;
-    padding:.38rem 1rem !important; font-size:.85rem !important;
+    padding:.38rem 1rem !important; font-size:.85rem !important; font-color:black !important;
 }
 [data-testid="stRadio"] label:hover { border-color:#2D6A4F !important; }
 
