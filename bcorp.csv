@@ -1,0 +1,23 @@
+brand,certified,cert_type,category
+Patagonia,TRUE,B-Corp,apparel
+Eileen Fisher,TRUE,B-Corp,apparel
+Allbirds,TRUE,B-Corp,footwear
+Prana,TRUE,B-Corp,apparel
+Thought Clothing,TRUE,B-Corp,apparel
+The Body Shop,TRUE,B-Corp,cosmetics
+Weleda,TRUE,B-Corp,cosmetics
+Natura,TRUE,B-Corp,cosmetics
+Dr. Bronner's,TRUE,B-Corp,cosmetics
+Seventh Generation,TRUE,B-Corp,household
+Ben & Jerry's,TRUE,B-Corp,food
+Innocent Drinks,TRUE,B-Corp,food
+Tony's Chocolonely,TRUE,B-Corp,food
+Oatly,TRUE,B-Corp,food
+tentree,TRUE,B-Corp,apparel
+Cotopaxi,TRUE,B-Corp,apparel
+Finisterre,TRUE,B-Corp,apparel
+H&M,FALSE,None,apparel
+Zara,FALSE,None,apparel
+Shein,FALSE,None,apparel
+Boohoo,FALSE,None,apparel
+Fast Retailing,FALSE,None,apparel

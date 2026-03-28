@@ -1,0 +1,15 @@
+brand,certified,cert_type,category
+Patagonia,TRUE,GOTS,apparel
+Prana,TRUE,GOTS,apparel
+Thought Clothing,TRUE,GOTS,apparel
+Pact,TRUE,GOTS,apparel
+Organic Basics,TRUE,GOTS,apparel
+Coyuchi,TRUE,GOTS,home
+Boll and Branch,TRUE,GOTS,home
+Avocado,TRUE,GOTS,home
+People Tree,TRUE,GOTS,apparel
+Shift to Nature,TRUE,GOTS,apparel
+H&M,FALSE,None,apparel
+Zara,FALSE,None,apparel
+Shein,FALSE,None,apparel
+Boohoo,FALSE,None,apparel

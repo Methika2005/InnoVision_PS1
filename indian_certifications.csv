@@ -1,0 +1,16 @@
+brand,certified,cert_type,category,country,certifying_body
+Tata Motors,TRUE,BIS EcoMark,automotive,India,Bureau of Indian Standards
+Wipro,TRUE,BIS EcoMark,electronics,India,Bureau of Indian Standards
+Godrej,TRUE,BIS EcoMark,household,India,Bureau of Indian Standards
+Marico,TRUE,BIS EcoMark,personal care,India,Bureau of Indian Standards
+ITC,TRUE,GreenPro,manufacturing,India,Confederation of Indian Industry
+Ultratech Cement,TRUE,GreenPro,construction,India,Confederation of Indian Industry
+Asian Paints,TRUE,GreenPro,construction,India,Confederation of Indian Industry
+Mahindra,TRUE,GreenPro,automotive,India,Confederation of Indian Industry
+Himalaya Drug Company,TRUE,ASCI Green,personal care,India,Advertising Standards Council of India
+Dabur,TRUE,ASCI Green,personal care,India,Advertising Standards Council of India
+Patanjali,FALSE,None,personal care,India,None
+Wow Skin Science,FALSE,None,personal care,India,None
+Mamaearth,FALSE,None,personal care,India,None
+MCaffeine,FALSE,None,personal care,India,None
+Sugar Cosmetics,FALSE,None,cosmetics,India,None
