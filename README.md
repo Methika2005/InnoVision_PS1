@@ -26,6 +26,8 @@ To provide a "Source of Truth," we integrated three major certification database
 3.  **Indian Certification Registry:** A curated list of regional sustainability markers.
 
 ### Preprocessing Steps:
+<img width="1280" height="692" alt="image" src="https://github.com/user-attachments/assets/d20acf01-8582-4117-a75d-649c6008a2a9" />
+
 * **Database Standardization:** Unified inconsistent column names across different CSV formats to ensure accurate brand-matching.
 * **Relevance Gating:** Segmented descriptions into sentences and filtered out non-environmental text (e.g., shipping info, sizing) to reduce model noise.
 * **Keyword Normalization:** Handled case-insensitivity and special characters to ensure robust database cross-referencing.
