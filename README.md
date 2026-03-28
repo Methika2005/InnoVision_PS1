@@ -39,8 +39,12 @@ Our system uses a **Hybrid Architecture** combining a deep-learning transformer 
 * **Core Model:** `facebook/bart-large-mnli` (Zero-Shot Classification).
 * **Classification Strategy:** Classifies sentence intent as *"Objective Environmental Fact"* vs. *"Vague Marketing Fluff."*
 
+---
+
 ### Demo Video:
 https://drive.google.com/file/d/1Onlr5d5nSulAsQcqy3LX6YhUJlwTDNCW/view?usp=sharing
+
+---
 
 ### Performance Metrics:
 | Metric | Value | Note |
