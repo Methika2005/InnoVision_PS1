@@ -1,3 +1,10 @@
+"""
+app.py — Synapse Green-Truth Auditor · Streamlit Frontend
+=========================================================
+DISPLAY ONLY. Contains zero scoring / classification logic.
+All logic lives in backend.py (which the notebook also imports).
+"""
+
 import streamlit as st
 import pandas as pd
 
@@ -20,36 +27,42 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────────────────────
-# FORCE LIGHT THEME & CUSTOM STYLING
+# FORCE LIGHT THEME
 # ─────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
 
-/* Main Background */
-html, body, [data-testid="stApp"], [data-testid="stAppViewContainer"], .main {
+html, body,
+[data-testid="stApp"],
+[data-testid="stAppViewContainer"],
+[data-testid="stHeader"],
+[data-testid="stMain"],
+[data-testid="stMainBlockContainer"],
+[data-testid="block-container"],
+.main, .block-container,
+div[class*="css"] {
     background-color: #F7F6F2 !important;
     color: #1A1A18 !important;
 }
 
-/* --- RADIO BUTTON TEXT COLOR FIX --- */
-/* Targets the text labels of the radio buttons specifically */
-[data-testid="stMarkdownContainer"] p {
-    color: #000000 !important;
-    font-weight: 500 !important;
+:root {
+    --bg:          #F7F6F2;
+    --surface:     #FFFFFF;
+    --border:      #E5E3DC;
+    --text:        #1A1A18;
+    --muted:       #6B6B63;
+    --green:       #2D6A4F;
+    --green-lt:    #E8F4F0;
+    --amber:       #B45309;
+    --amber-lt:    #FEF3C7;
+    --red:         #9B1C1C;
+    --red-lt:      #FEE2E2;
+    --blue:        #1E3A5F;
+    --blue-lt:     #DBEAFE;
+    --grey-lt:     #F3F4F6;
 }
 
-/* Targets the unselected state label color */
-div[data-testid="stRadio"] label p {
-    color: #000000 !important;
-}
-
-/* Targets the selected state (Streamlit often uses primary color) */
-div[data-testid="stRadio"] div[role="radiogroup"] > label[data-checked="true"] p {
-    color: #2D6A4F !important; /* Dark Green for the active choice */
-}
-
-/* Global Font */
 html, body, p, div, span, label, input, textarea, button {
     font-family: 'DM Sans', sans-serif !important;
 }
@@ -57,7 +70,7 @@ html, body, p, div, span, label, input, textarea, button {
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding: 2.5rem 3rem 4rem !important; max-width: 1100px !important; }
 
-/* Hero Section */
+/* Hero */
 .hero-title {
     font-family: 'DM Serif Display', serif !important;
     font-size: 2.4rem; color: #1A1A18 !important;
@@ -70,7 +83,7 @@ html, body, p, div, span, label, input, textarea, button {
 }
 .hero-sub { color: #6B6B63 !important; font-size: 0.95rem; font-weight: 300; margin: 0.4rem 0 2rem; }
 
-/* Card Styling */
+/* Cards */
 .card {
     background: #FFFFFF !important; border: 1.5px solid #E5E3DC;
     border-radius: 16px; padding: 1.8rem 2rem 1.5rem; margin-bottom: 1.6rem;
@@ -80,48 +93,185 @@ html, body, p, div, span, label, input, textarea, button {
     text-transform: uppercase; color: #6B6B63; margin-bottom: 1rem;
 }
 
-/* Widgets Styling */
+/* Score card */
+.score-card {
+    background: #FFFFFF !important; border: 1.5px solid #E5E3DC;
+    border-radius: 16px; padding: 1.6rem 1.8rem;
+}
+.score-number {
+    font-family: 'DM Serif Display', serif !important;
+    font-size: 3.8rem; line-height: 1; display: block;
+}
+.score-sub {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.11em;
+    text-transform: uppercase; color: #6B6B63; margin-bottom: 0.6rem;
+}
+.verdict-pill {
+    display: inline-block; padding: 0.35rem 1.1rem; border-radius: 50px;
+    font-size: 0.8rem; font-weight: 700; margin-top: 0.6rem; letter-spacing: 0.04em;
+}
+.pill-green { background: #E8F4F0; color: #2D6A4F; }
+.pill-amber { background: #FEF3C7; color: #B45309; }
+.pill-red   { background: #FEE2E2; color: #9B1C1C; }
+
+/* Stat chips */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: .75rem; }
+.stat-chip {
+    background: #FFFFFF !important; border: 1.5px solid #E5E3DC;
+    border-radius: 12px; padding: .9rem .8rem; text-align: center;
+}
+.stat-num { font-family:'DM Serif Display',serif !important; font-size:2rem; color:#1A1A18; display:block; }
+.stat-lbl { font-size:.65rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:#6B6B63; display:block; margin-top:.1rem; }
+
+/* Brand chips */
+.brand-row { display:flex; flex-wrap:wrap; gap:.55rem; margin-bottom:1.4rem; }
+.brand-chip {
+    display:inline-flex; align-items:center; gap:.35rem;
+    padding:.38rem .85rem; border-radius:50px; font-size:.8rem; font-weight:500; border:1.5px solid;
+}
+.bc-ok  { background:#E8F4F0; border-color:#A7D5C4; color:#2D6A4F; }
+.bc-bad { background:#FEE2E2; border-color:#FCA5A5; color:#9B1C1C; }
+
+/* Section label */
+.sec-label {
+    font-size:.68rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+    color:#6B6B63; display:flex; align-items:center; gap:.6rem; margin:1.8rem 0 .85rem;
+}
+.sec-label::after { content:''; flex:1; height:1px; background:#E5E3DC; }
+
+/* Sentence rows */
+.s-row {
+    background:#FFFFFF !important; border:1.5px solid #E5E3DC;
+    border-left:4px solid #E5E3DC; border-radius:10px; padding:1rem 1.2rem; margin-bottom:.55rem;
+}
+.s-text { font-size:.91rem; color:#1A1A18 !important; line-height:1.55; margin-bottom:.5rem; }
+.s-meta { display:flex; flex-wrap:wrap; align-items:center; gap:.45rem; }
+.v-tag { font-size:.65rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.18rem .55rem; border-radius:4px; }
+.s-reason { font-size:.77rem; color:#6B6B63; }
+.flag-word { font-size:.7rem; background:#FEF3C7; color:#B45309; padding:.1rem .45rem; border-radius:3px; font-weight:600; }
+
+.vd-vague    { border-left-color:#EF4444 !important; }
+.vd-fake     { border-left-color:#B91C1C !important; }
+.vd-unverif  { border-left-color:#F59E0B !important; }
+.vd-future   { border-left-color:#D97706 !important; }
+.vd-pr       { border-left-color:#9CA3AF !important; }
+.vd-backed   { border-left-color:#2D6A4F !important; }
+.vd-evidence { border-left-color:#1E3A5F !important; }
+.vd-ignored  { border-left-color:#D1D5DB !important; }
+
+/* Widgets */
+[data-testid="stRadio"] > div { background:transparent !important; }
 [data-testid="stRadio"] label {
-    background:#FFFFFF !important; 
+    background:#FFFFFF !important; color:#1A1A18 !important;
     border:1.5px solid #E5E3DC !important; border-radius:8px !important;
-    padding:.38rem 1rem !important; font-size:.85rem !important;
+    padding:.38rem 1rem !important; font-size:.85rem !important; font-color:black !important;
 }
 [data-testid="stRadio"] label:hover { border-color:#2D6A4F !important; }
 
-[data-testid="stTextArea"] textarea, [data-testid="stTextInput"] input {
+[data-testid="stTextArea"] textarea {
+    background:#FFFFFF !important; color:#1A1A18 !important;
+    border:1.5px solid #E5E3DC !important; border-radius:10px !important;
+    font-family:'DM Sans',sans-serif !important; font-size:.9rem !important;
+}
+[data-testid="stTextArea"] textarea:focus {
+    border-color:#2D6A4F !important; box-shadow:0 0 0 3px rgba(45,106,79,.12) !important;
+}
+[data-testid="stTextArea"] label { color:#6B6B63 !important; }
+
+[data-testid="stTextInput"] input {
     background:#FFFFFF !important; color:#1A1A18 !important;
     border:1.5px solid #E5E3DC !important; border-radius:10px !important;
 }
+[data-testid="stTextInput"] input:focus {
+    border-color:#2D6A4F !important; box-shadow:0 0 0 3px rgba(45,106,79,.12) !important;
+}
+[data-testid="stTextInput"] label { color:#6B6B63 !important; }
 
 [data-testid="stButton"] > button {
     background:#2D6A4F !important; color:#FFFFFF !important; border:none !important;
     border-radius:10px !important; font-weight:600 !important;
+    font-size:.9rem !important; padding:.6rem 2rem !important; letter-spacing:.03em !important;
 }
+[data-testid="stButton"] > button:hover { opacity:.85 !important; }
+
+[data-testid="stDownloadButton"] > button {
+    background:#FFFFFF !important; color:#2D6A4F !important;
+    border:1.5px solid #2D6A4F !important; border-radius:10px !important;
+    font-weight:600 !important; font-size:.85rem !important;
+}
+[data-testid="stDownloadButton"] > button:hover { background:#E8F4F0 !important; }
+
+[data-testid="stCheckbox"] label { color:#1A1A18 !important; font-size:.85rem !important; }
+[data-testid="stProgressBar"] > div > div { background:#2D6A4F !important; border-radius:4px !important; }
+[data-testid="stProgressBar"] { background:#E5E3DC !important; border-radius:4px !important; }
+[data-testid="stAlert"] { background:#FFFFFF !important; border-radius:10px !important; }
+[data-testid="stExpander"] { background:#FFFFFF !important; border:1.5px solid #E5E3DC !important; border-radius:10px !important; }
+[data-testid="stExpander"] summary { color:#1A1A18 !important; font-size:.85rem !important; }
+hr { border-color:#E5E3DC !important; margin:1.4rem 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# (Remainder of VERDICT_META and helper functions from your snippet...)
+# ─────────────────────────────────────────────────────────────
+# VERDICT DISPLAY MAP (UI-only concern, lives here not backend)
+# ─────────────────────────────────────────────────────────────
+
+VERDICT_META = {
+    "Vague":                        {"icon":"❌","div":"vd-vague",   "tbg":"#FEE2E2","tfg":"#9B1C1C"},
+    "Fake Certification Claim":     {"icon":"🚨","div":"vd-fake",    "tbg":"#FEE2E2","tfg":"#7F1D1D"},
+    "Unverified Statistic":         {"icon":"📉","div":"vd-unverif", "tbg":"#FEF3C7","tfg":"#B45309"},
+    "Future Promise (Not Evidence)":{"icon":"🗓️","div":"vd-future",  "tbg":"#FEF3C7","tfg":"#92400E"},
+    "Uncertain / PR Speak":         {"icon":"⚠️","div":"vd-pr",      "tbg":"#F3F4F6","tfg":"#4B5563"},
+    "Backed Claim":                 {"icon":"✅","div":"vd-backed",   "tbg":"#E8F4F0","tfg":"#2D6A4F"},
+    "Evidence-Based":               {"icon":"📊","div":"vd-evidence", "tbg":"#DBEAFE","tfg":"#1E3A5F"},
+    "Ignored (Website Noise)":      {"icon":"⚪","div":"vd-ignored",  "tbg":"#F3F4F6","tfg":"#9CA3AF"},
+}
+
+def score_color(s):
+    return "#2D6A4F" if s >= 0.7 else "#B45309" if s >= 0.4 else "#9B1C1C"
+
+def pill_class(overall):
+    return ("pill-green" if overall == "Legitimate Claims" else
+            "pill-amber" if overall == "Uncertain" else "pill-red")
 
 # ─────────────────────────────────────────────────────────────
-# LOAD DATA & MODELS
+# CACHED RESOURCE WRAPPERS (Streamlit cache wraps backend fns)
 # ─────────────────────────────────────────────────────────────
-clf = load_model()
-bcorp, gots, india = load_databases()
+
+@st.cache_resource(show_spinner="Loading AI model…")
+def get_model():
+    return load_model()          # ← backend.load_model()
+
+@st.cache_data(show_spinner="Loading certification databases…")
+def get_databases():
+    return load_databases()      # ← backend.load_databases()
 
 # ─────────────────────────────────────────────────────────────
 # HEADER
 # ─────────────────────────────────────────────────────────────
+
 st.markdown("""
-<div class="hero-title">🌿 Green-Truth Auditor <span class="hero-badge">Beta</span></div>
-<p class="hero-sub">Paste a sustainability claim or enter a product URL — we'll verify it against global standards.</p>
+<div class="hero-title">
+  🌿 Green-Truth Auditor <span class="hero-badge">Beta</span>
+</div>
+<p class="hero-sub">
+  Paste a sustainability claim or enter a product URL —
+  we'll tell you if it's real or greenwashing.
+</p>
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────
-# INPUT CARD
+# LOAD (via backend)
 # ─────────────────────────────────────────────────────────────
-st.markdown('<div class="card"><div class="card-label">Input Source</div>', unsafe_allow_html=True)
 
-# The Radio button with forced black text via CSS above
+clf             = get_model()
+bcorp, gots, india = get_databases()
+
+# ─────────────────────────────────────────────────────────────
+# INPUT
+# ─────────────────────────────────────────────────────────────
+
+st.markdown('<div class="card"><div class="card-label">Input</div>', unsafe_allow_html=True)
+
 input_type = st.radio("", ["Paste text", "Enter URL"],
                       horizontal=True, label_visibility="collapsed")
 
@@ -138,7 +288,7 @@ else:
                         placeholder="https://example.com/sustainability")
     if url:
         with st.spinner("Fetching page content…"):
-            scraped = scrape_url(url)
+            scraped = scrape_url(url)       # ← backend.scrape_url()
         if scraped:
             st.success("Page scraped successfully.")
             with st.expander("Preview scraped text"):
